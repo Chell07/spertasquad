@@ -3,9 +3,9 @@ class MusicPlayer {
     constructor() {
         this.audio = document.getElementById('background-music');
         this.musicFiles = [
-            'music/music1.mp3',
-            'music/music2.mp3',
-            'music/music3.mp3'
+            'music/amelsound.mp3',
+            'music/sigma.mp3',
+            'music/sperta.mp3'
         ];
         this.currentMusicIndex = 0;
         this.isPlaying = false;
@@ -450,4 +450,5 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', initTheme);
 
 // Add event listener to theme toggle button
+
 themeToggle.addEventListener('click', toggleTheme);
