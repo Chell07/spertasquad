@@ -311,6 +311,123 @@ hr {
   color: #1e40af;
 }
 
+/* Video Container Styles */
+.video-container {
+  position: relative;
+  width: 225px;
+  height: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  cursor: pointer;
+  background: #000;
+  transition: all 0.3s ease;
+}
+
+.about-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.video-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.video-overlay:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateX(-50%) scale(1.05);
+}
+
+.video-container:hover .about-video {
+  transform: scale(1.05);
+}
+
+/* Video Popup Styles */
+.video-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-popup.active {
+  display: flex;
+  opacity: 1;
+}
+
+.video-popup-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#popup-video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #000;
+  outline: none;
+}
+
+.close-video-popup {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10000;
+  border: none;
+}
+
+.close-video-popup:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
 /* Team Section - Simplified */
 .team {
   margin: 160px 200px;
@@ -819,6 +936,16 @@ body.dark-mode .theme-toggle {
   color: #e0e0e0;
 }
 
+/* Dark mode untuk video */
+body.dark-mode .video-container {
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .about-video {
+  border: 1px solid #444;
+}
+
 /* Back to top button */
 #back-to-top {
   position: fixed;
@@ -836,6 +963,11 @@ body.dark-mode .theme-toggle {
   z-index: 1000;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 12px rgba(71, 74, 240, 0.3);
+}
+
+#back-to-top:hover {
+  transform: scale(1.1);
+  background: #2c36d9;
 }
 
 /* Animations */
@@ -868,130 +1000,15 @@ body.dark-mode .theme-toggle {
   transform: translateX(0);
 }
 
-/* Video Container Styles */
-.video-container {
-  position: relative;
-  width: 225px;
-  height: 400px;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-  cursor: pointer;
-  background: #000;
-}
-
-.about-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 15px;
-  transition: transform 0.3s ease;
-}
-
-.video-overlay {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-.video-overlay:hover {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.9);
-}
-
-.video-container:hover .about-video {
-  transform: scale(1.05);
-}
-
-/* Video Popup Styles */
-.video-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.video-popup.active {
-  display: flex;
-  opacity: 1;
-}
-
-.video-popup-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#popup-video {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  background: #000;
-}
-
-.close-video-popup {
-  position: absolute;
-  top: -50px;
-  right: 0;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  background: rgba(0,0,0,0.5);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10000;
-}
-
-.close-video-popup:hover {
-  background: rgba(255,255,255,0.2);
-  transform: scale(1.1);
-}
-
-/* Dark mode support */
-body.dark-mode .video-container {
-  border: 1px solid #333;
-}
-
-body.dark-mode .about-video {
-  border: 1px solid #444;
-}
-
 /* Responsive Design untuk Video */
 @media (max-width: 1024px) {
   .video-container {
     width: 200px;
     height: 355px;
+  }
+  
+  .video-popup-content {
+    max-width: 95%;
   }
 }
 
@@ -1005,6 +1022,21 @@ body.dark-mode .about-video {
   .video-overlay {
     font-size: 11px;
     padding: 6px 12px;
+  }
+  
+  .video-popup-content {
+    max-width: 98%;
+  }
+  
+  #popup-video {
+    max-height: 70vh;
+  }
+  
+  .close-video-popup {
+    top: -40px;
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
   }
 }
 
@@ -1021,6 +1053,10 @@ body.dark-mode .about-video {
   
   .video-overlay i {
     font-size: 14px;
+  }
+  
+  #popup-video {
+    max-height: 60vh;
   }
 }
 
@@ -1215,4 +1251,55 @@ body.dark-mode .about-video {
     width: 80px;
     height: 80px;
   }
+}
+
+/* Additional utility classes */
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, .video-container, .member-card-simple {
+  transition: all 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+button:focus, a:focus {
+  outline: 2px solid #474af0;
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background: #474af0;
+  color: white;
+}
+
+::-moz-selection {
+  background: #474af0;
+  color: white;
 }
