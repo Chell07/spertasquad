@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squad Sperta - Politeknik Negeri Manado</title>
+    <title>Sperta Squad - SPREI TACABU SETENGAH</title>
     <link rel="stylesheet" href="stayle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,17 +52,28 @@
         </div>
     </div>
 
+    <!-- Video Popup -->
+    <div id="video-popup" class="video-popup">
+        <div class="video-popup-content">
+            <span class="close-video-popup">&times;</span>
+            <video id="popup-video" controls>
+                <source src="videos/about-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
     <div id="loading-screen">
         <div class="loading-content">
             <!-- Logo Kustom PNG -->
-            <img src="images/logo.png" alt="Squad Sperta Logo" class="custom-logo hidden">
-            <h1 id="loading-text" class="hidden">SQUAD SPERTA</h1>
+            <img src="images/logo.png" alt="Sperta Squad Logo" class="custom-logo hidden">
+            <h1 id="loading-text" class="hidden">Sperta Squad</h1>
             <div class="sub-icons">
                 <i class="fa-brands fa-github fa-2x hidden"></i>
                 <i class="fa-solid fa-code fa-2x hidden"></i>
                 <i class="fa-solid fa-users fa-2x hidden"></i>
             </div>
-            <h2 id="designer-text" class="hidden">Politeknik Negeri Manado</h2>
+            <h2 id="designer-text" class="hidden">SPREI TACABU SETENGAH</h2>
         </div>
     </div>
 
@@ -93,7 +104,7 @@
         <div class="home-container">
             <div class="home-section">
                 <div class="info-home">
-                    <h1>Hi, We're Squad Sperta</h1>
+                    <h1>Hi, We're Sperta Squad</h1>
                     <h3>Computer Engineering Students</h3>
                     <div class="info-p">
                        <p>We are a group of 6 students from Politeknik Negeri Manado, majoring in </p>
@@ -107,17 +118,17 @@
                     <div class="hhr">
                         <hr>
                     </div>
-                    <div class="follow">
-                        <p class="followw">Follow us:</p>
-                        <ul>
-                            <li><a href="#"><i class="fa-brands fa-github"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-discord"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                        </ul>
+                        <div class="follow">
+                            <p class="followw">Follow us:</p>
+                            <ul>
+                            <li><a href="https://github.com/Chell07" target="_blank"><i class="fa-brands fa-github"></i></a></li>
+                            <li><a href="https://discord.gg/MVDCU62PRm" target="_blank"><i class="fa-brands fa-discord"></i></a></li>
+                            <li><a href="https://instagram.com/electrobyte_25" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                          </ul>
                     </div>
                 </div>
             </div>
-            <img src="images/img2.jpg" alt="Squad Sperta Photo">
+            <img src="images/img2.jpg" alt="Sperta Squad Photo">
         </div>
     </section>
 
@@ -135,7 +146,7 @@
             <div class="info-about">
                 <div class="about-info">
                     <p>
-                        We are Squad Sperta - a group of passionate Computer Engineering students from 
+                        We are Sperta Squad - a group of passionate Computer Engineering students from 
                         <br>Politeknik Negeri Manado who are enthusiastic about web development. Our journey 
                         <br>began in the classroom and has grown into a collaborative learning experience.
                     </p>
@@ -151,14 +162,25 @@
                     </p>
                 </div>
             </div>
-            <img src="images/img.jpg" alt="Squad Sperta Photo">
+            
+            <!-- Video Container 9:16 -->
+            <div class="video-container">
+                <video class="about-video" autoplay muted loop playsinline>
+                    <source src="videos/about-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-volume-mute"></i>
+                    <span>Click untuk audio</span>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Team Section -->
     <section class="team" id="team">
         <p>OUR TEAM</p>
-        <h1>Meet Squad Sperta</h1>
+        <h1>Meet Sperta Squad</h1>
         <hr>
         <div class="info-team">
             <p>The six members of our squad who are learning and growing together in </p>
@@ -214,22 +236,21 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <h2 class="footer-logo">Squad Sperta</h2>
+            <h2 class="footer-logo">Sperta Squad</h2>
             <ul class="footer-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#team">Our Team</a></li>
             </ul>
-            <div class="footer-social">
-                <a href="https://github.com/Saboo24" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <div class="footer-social">
+                    <a href="https://github.com/Chell07" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://discord.gg/MVDCU62PRm" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://instagram.com/electrobyte_25" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <p class="footer-copy">&copy; 2025 Squad Sperta - Politeknik Negeri Manado. All Rights Reserved.</p>
+            <p class="footer-copy">&copy; 2025 Sperta Squad - Politeknik Negeri Manado. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script src="main.js"></script>
 </body>
-
 </html>
