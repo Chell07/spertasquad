@@ -152,12 +152,12 @@ class ImageViewer {
         this.currentImageIndex = index;
         this.updateViewer();
         this.viewer.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
+        document.body.style.overflow = 'hidden';
     }
 
     closeViewer() {
         this.viewer.classList.remove('active');
-        document.body.style.overflow = ''; // Restore background scroll
+        document.body.style.overflow = '';
     }
 
     prevImage() {
@@ -181,6 +181,100 @@ class ImageViewer {
 // Initialize Image Viewer
 const imageViewer = new ImageViewer();
 
+// Video Popup System - SIMPLIFIED VERSION
+class VideoPopup {
+    constructor() {
+        this.videoPopup = document.getElementById('video-popup');
+        this.popupVideo = document.getElementById('popup-video');
+        this.aboutVideo = document.querySelector('.about-video');
+        
+        this.initializeVideoPopup();
+    }
+
+    initializeVideoPopup() {
+        // Open video popup when clicking on video container
+        const videoOverlay = document.querySelector('.video-overlay');
+        if (videoOverlay) {
+            videoOverlay.addEventListener('click', () => this.openPopup());
+        }
+        
+        // Close video popup events
+        const closeBtn = document.querySelector('.close-video-popup');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closePopup());
+        }
+        
+        // Close when clicking outside video
+        if (this.videoPopup) {
+            this.videoPopup.addEventListener('click', (e) => {
+                if (e.target === this.videoPopup) this.closePopup();
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!this.videoPopup || !this.videoPopup.classList.contains('active')) return;
+            
+            if(e.key === 'Escape') {
+                this.closePopup();
+            }
+        });
+    }
+
+    openPopup() {
+        if (!this.aboutVideo || !this.popupVideo || !this.videoPopup) {
+            console.log('Video elements not found');
+            return;
+        }
+        
+        console.log('Opening video popup');
+        
+        // Set popup video source
+        this.popupVideo.src = this.aboutVideo.src;
+        this.popupVideo.muted = false;
+        this.popupVideo.controls = true;
+        this.popupVideo.currentTime = this.aboutVideo.currentTime;
+        
+        // Show popup
+        this.videoPopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Try to play video
+        const playPromise = this.popupVideo.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Video playback started successfully');
+            }).catch(error => {
+                console.log('Auto-play failed, user interaction required:', error);
+                // Show controls for manual play
+                this.popupVideo.controls = true;
+            });
+        }
+    }
+
+    closePopup() {
+        if (!this.aboutVideo || !this.popupVideo || !this.videoPopup) return;
+        
+        console.log('Closing video popup');
+        
+        // Pause and reset popup video
+        this.popupVideo.pause();
+        this.popupVideo.currentTime = 0;
+        this.popupVideo.src = '';
+        
+        // Resume background video
+        this.aboutVideo.muted = true;
+        if (this.aboutVideo.paused) {
+            this.aboutVideo.play().catch(e => console.log('Background video resume error:', e));
+        }
+        
+        // Close popup
+        this.videoPopup.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
 // Music Controls Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     const playPauseBtn = document.getElementById('play-pause-music');
@@ -198,6 +292,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (prevBtn) {
         prevBtn.addEventListener('click', () => musicPlayer.playPrev());
     }
+
+    // Initialize Video Popup
+    window.videoPopup = new VideoPopup();
 });
 
 // Navigation and Scroll Effects
@@ -304,7 +401,7 @@ teamCards.forEach(card => {
 
 // Typing animation
 const typingElement = document.querySelector('.info-home h3'); 
-const words = ["Computer Engineering Students", "Web Development Learners", "Politeknik Negeri Manado", "Squad Sperta"];
+const words = ["Computer Engineering Students", "Web Development Learners", "Politeknik Negeri Manado", "Sperta Squad"];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -347,12 +444,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Sequence loading animations
-  showElement(mainIcon, 0);          // Logo muncul pertama
-  showElement(loadingText, 800);     // Teks SQUAD SPERTA
+  showElement(mainIcon, 0);
+  showElement(loadingText, 800);
   subIcons.forEach((icon, idx) => {
     showElement(icon, 1600 + idx * 400);  
   });
-  showElement(designerText, 2800);    
+  showElement(designerText, 2800);
 
   // Hide loading screen after animations
   setTimeout(() => {
@@ -450,5 +547,11 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', initTheme);
 
 // Add event listener to theme toggle button
-
 themeToggle.addEventListener('click', toggleTheme);
+
+// Global function untuk membuka video popup
+function openVideoPopup() {
+    if (window.videoPopup) {
+        window.videoPopup.openPopup();
+    }
+}
