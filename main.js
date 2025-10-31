@@ -181,108 +181,153 @@ class ImageViewer {
 // Initialize Image Viewer
 const imageViewer = new ImageViewer();
 
-// Video Popup System - SIMPLIFIED VERSION
+// VIDEO POPUP SYSTEM - FIXED VERSION
 class VideoPopup {
     constructor() {
         this.videoPopup = document.getElementById('video-popup');
         this.popupVideo = document.getElementById('popup-video');
         this.aboutVideo = document.querySelector('.about-video');
         
-        this.initializeVideoPopup();
+        this.init();
     }
 
-    initializeVideoPopup() {
-        // Open video popup when clicking on video container
+    init() {
+        console.log('Initializing Video Popup...');
+        
+        // Event listener untuk overlay video
         const videoOverlay = document.querySelector('.video-overlay');
         if (videoOverlay) {
-            videoOverlay.addEventListener('click', () => this.openPopup());
+            videoOverlay.addEventListener('click', () => this.open());
+            console.log('Video overlay event listener added');
+        } else {
+            console.error('Video overlay not found');
         }
         
-        // Close video popup events
+        // Event listener untuk close button
         const closeBtn = document.querySelector('.close-video-popup');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.closePopup());
+            closeBtn.addEventListener('click', () => this.close());
+            console.log('Close button event listener added');
+        } else {
+            console.error('Close button not found');
         }
         
-        // Close when clicking outside video
+        // Close ketika klik di luar video
         if (this.videoPopup) {
             this.videoPopup.addEventListener('click', (e) => {
-                if (e.target === this.videoPopup) this.closePopup();
+                if (e.target === this.videoPopup) this.close();
             });
         }
 
-        // Keyboard navigation
+        // Close dengan ESC key
         document.addEventListener('keydown', (e) => {
-            if (!this.videoPopup || !this.videoPopup.classList.contains('active')) return;
-            
-            if(e.key === 'Escape') {
-                this.closePopup();
+            if (e.key === 'Escape' && this.videoPopup && this.videoPopup.classList.contains('active')) {
+                this.close();
             }
         });
+
+        // Pastikan background video ready
+        if (this.aboutVideo) {
+            this.aboutVideo.addEventListener('loadeddata', () => {
+                console.log('Background video loaded successfully');
+            });
+            
+            this.aboutVideo.addEventListener('error', (e) => {
+                console.error('Background video error:', e);
+            });
+        }
     }
 
-    openPopup() {
-        if (!this.aboutVideo || !this.popupVideo || !this.videoPopup) {
-            console.log('Video elements not found');
+    open() {
+        console.log('Opening video popup...');
+        
+        if (!this.aboutVideo) {
+            console.error('About video not found');
             return;
         }
+        if (!this.popupVideo) {
+            console.error('Popup video not found');
+            return;
+        }
+        if (!this.videoPopup) {
+            console.error('Video popup container not found');
+            return;
+        }
+
+        // Dapatkan source dari background video
+        const videoSource = this.aboutVideo.querySelector('source').src;
+        console.log('Video source:', videoSource);
+
+        // Clear existing sources
+        this.popupVideo.innerHTML = '';
         
-        console.log('Opening video popup');
+        // Create new source element
+        const source = document.createElement('source');
+        source.src = videoSource;
+        source.type = 'video/mp4';
         
-        // Set popup video source
-        this.popupVideo.src = this.aboutVideo.src;
+        // Add source to video
+        this.popupVideo.appendChild(source);
+        
+        // Load the new video
+        this.popupVideo.load();
+        
+        // Configure video properties
         this.popupVideo.muted = false;
         this.popupVideo.controls = true;
         this.popupVideo.currentTime = this.aboutVideo.currentTime;
         
-        // Show popup
+        // Tampilkan popup
         this.videoPopup.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        // Try to play video
-        const playPromise = this.popupVideo.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                console.log('Video playback started successfully');
-            }).catch(error => {
-                console.log('Auto-play failed, user interaction required:', error);
-                // Show controls for manual play
-                this.popupVideo.controls = true;
-            });
-        }
+        // Tunggu sedikit lalu coba play
+        setTimeout(() => {
+            const playPromise = this.popupVideo.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Video playback started successfully');
+                }).catch(error => {
+                    console.log('Autoplay failed, user must click play:', error);
+                    // Tidak masalah, user bisa klik play manual
+                });
+            }
+        }, 300);
     }
 
-    closePopup() {
-        if (!this.aboutVideo || !this.popupVideo || !this.videoPopup) return;
+    close() {
+        console.log('Closing video popup...');
         
-        console.log('Closing video popup');
-        
-        // Pause and reset popup video
-        this.popupVideo.pause();
-        this.popupVideo.currentTime = 0;
-        this.popupVideo.src = '';
-        
-        // Resume background video
-        this.aboutVideo.muted = true;
-        if (this.aboutVideo.paused) {
-            this.aboutVideo.play().catch(e => console.log('Background video resume error:', e));
+        if (this.popupVideo) {
+            this.popupVideo.pause();
+            this.popupVideo.currentTime = 0;
         }
         
-        // Close popup
-        this.videoPopup.classList.remove('active');
+        if (this.videoPopup) {
+            this.videoPopup.classList.remove('active');
+        }
+        
         document.body.style.overflow = '';
+        
+        // Pastikan background video tetap play
+        if (this.aboutVideo && this.aboutVideo.paused) {
+            this.aboutVideo.play().catch(e => console.log('Background video play error:', e));
+        }
     }
 }
 
 // Music Controls Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded, initializing components...');
+    
     const playPauseBtn = document.getElementById('play-pause-music');
     const nextBtn = document.getElementById('next-music');
     const prevBtn = document.getElementById('prev-music');
 
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', () => musicPlayer.togglePlay());
+        console.log('Music controls initialized');
     }
 
     if (nextBtn) {
@@ -294,8 +339,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize Video Popup
-    window.videoPopup = new VideoPopup();
+    try {
+        window.videoPopup = new VideoPopup();
+        console.log('Video Popup initialized successfully');
+    } catch (error) {
+        console.error('Error initializing Video Popup:', error);
+    }
 });
+
+// Global function untuk open video popup
+function openVideoPopup() {
+    console.log('openVideoPopup called');
+    if (window.videoPopup) {
+        window.videoPopup.open();
+    } else {
+        console.error('VideoPopup not initialized');
+    }
+}
 
 // Navigation and Scroll Effects
 const navLinks = document.querySelectorAll('.ul-list li a');
@@ -411,7 +471,9 @@ function type() {
     const currentWord = words[wordIndex];
     let displayedText = currentWord.substring(0, charIndex);
     
-    typingElement.innerHTML = displayedText + '<span class="cursor">|</span>';
+    if (typingElement) {
+        typingElement.innerHTML = displayedText + '<span class="cursor">|</span>';
+    }
 
     if (!isDeleting && charIndex < currentWord.length) {
         charIndex++;
@@ -549,9 +611,13 @@ document.addEventListener('DOMContentLoaded', initTheme);
 // Add event listener to theme toggle button
 themeToggle.addEventListener('click', toggleTheme);
 
-// Global function untuk membuka video popup
-function openVideoPopup() {
-    if (window.videoPopup) {
-        window.videoPopup.openPopup();
+// Error handling untuk video
+window.addEventListener('error', function(e) {
+    if (e.target.tagName === 'VIDEO') {
+        console.error('Video error:', e);
+        console.error('Video error details:', e.target.error);
     }
-}
+}, true);
+
+// Log untuk debugging
+console.log('main.js loaded successfully');
