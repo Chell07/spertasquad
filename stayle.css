@@ -1,0 +1,1295 @@
+/* FULL stayle.css (player moved to left bottom + dark-mode integration) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* NOTE: .music-controls (player lama) dihapus karena tidak lagi digunakan 
+  di HTML atau JS Anda. Anda sekarang menggunakan .modern-music-player.
+*/
+
+/* Header Styles FIXED - No Gap */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s ease;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* (other site styles — preserved) */
+.header-list { margin: 0; padding: 15px 20px; }
+.div-list { display:flex; align-items:center; justify-content:center; padding:0; }
+.ul-list { list-style:none; display:flex; gap:3rem; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:10px 25px; border-radius:25px; margin:0; }
+
+.ul-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 25px;
+  transition: 0.3s;
+  padding: 8px 15px;
+}
+
+.ul-list li a {
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.ul-list li.active {
+  background-color: black;
+}
+
+.ul-list li.active a,
+.ul-list li.active i {
+  color: white;
+}
+
+.ul-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.ul-list li.active:hover {
+  background-color: #333;
+}
+
+/* Home */
+.home { margin:160px 200px; padding-top:80px; margin-top:0; }
+.home-container { display:flex; gap:6rem; align-items:center; }
+
+.home-p {
+  color: black;
+  background-color: rgba(128, 128, 128, 0.214);
+  display: inline-block;
+  border-radius: 25px;
+  padding: 5px 10px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.home-s {
+  font-weight: bold;
+  color: green;
+}
+
+.info-home h1 {
+  font-size: 70px;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 20px;
+  line-height: 1.1;
+  transition: color 0.3s ease;
+  letter-spacing: -1px; /* Diambil dari duplikat */
+}
+
+.info-home h3 {
+  font-size: 40px;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 20px;
+  color: #474af0;
+  min-height: 60px;
+}
+
+.info-p {
+  color: #222;
+  font-family: "Roboto", sans-serif;
+  padding-bottom: 20px;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.info-p p {
+  padding-bottom: 5px;
+}
+
+.info-p2 {
+  display: flex;
+  gap: 1rem;
+  color: #2c2c2c;
+  font-size: 14px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+  transition: color 0.3s ease;
+}
+
+.hhr {
+  padding-bottom: 30px;
+}
+
+hr {
+  width: 90%;
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+.follow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.follow ul {
+  display: flex;
+  gap: 2rem;
+  font-size: 20px;
+  list-style: none;
+}
+
+.follow ul a {
+  text-decoration: none;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.follow ul a:hover {
+  color: #474af0;
+}
+
+.home img { width:400px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+
+/* About */
+.about { margin:160px 200px; }
+
+.about p {
+  padding-bottom: 30px;
+  font-size: 13px;
+  color: rgb(50, 50, 50);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.about h1 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.title {
+  padding-bottom: 20px;
+}
+
+.hrrr {
+  width: 30%;
+  padding-bottom: 40px;
+}
+
+.about-container {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.info-about {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.about-info p {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.about h2 {
+  padding: 30px 0;
+  font-family: "Open Sans", sans-serif;
+  color: #1e40af;
+}
+
+/* Video Container Styles */
+.video-container {
+  position: relative;
+  width: 225px;
+  height: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  cursor: pointer;
+  background: #000;
+  transition: all 0.3s ease;
+}
+
+.about-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.video-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.video-overlay:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateX(-50%) scale(1.05);
+}
+
+.video-container:hover .about-video {
+  transform: scale(1.05);
+}
+
+/* Video Popup Styles */
+.video-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-popup.active {
+  display: flex;
+  opacity: 1;
+}
+
+.video-popup-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#popup-video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #000;
+  outline: none;
+}
+
+.close-video-popup {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10000;
+  border: none;
+}
+
+.close-video-popup:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+/* Team */
+.team { margin:160px 200px; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+
+.team p {
+  padding-bottom: 20px;
+  font-size: 13px;
+  color: rgb(50, 50, 50);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.team h1 {
+  font-family: "Open Sans", sans-serif;
+  padding-bottom: 10px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.team hr {
+  width: 10%;
+}
+
+.info-team {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.info-team p {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.team-scroll-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  position: relative;
+}
+
+.team-scroll-wrapper { width:100%; overflow-x:auto; padding:40px 0; scrollbar-width:none; -ms-overflow-style:none; scroll-behavior: smooth; }
+
+.team-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.team-member-scroll { display:flex; gap:40px; padding:20px; min-width:min-content; }
+
+/* Member cards */
+.member-card-simple { flex:0 0 450px; background:#fff; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); overflow:hidden; cursor:pointer; display:flex; flex-direction:column; align-items:center; border: 1px solid #f0f0f0; transition: all 0.3s ease; text-align: center; }
+.member-card-simple:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.member-photo-container { width:100%; height:253px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.member-photo-simple { width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
+.member-card-simple:hover .member-photo-simple { transform: scale(1.1); }
+
+.scroll-indicator {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.scroll-hint {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+  animation: bounce 2s infinite;
+  transition: color 0.3s ease;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+}
+
+/* Image Viewer Popup */
+.image-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-viewer.active {
+  display: flex;
+  opacity: 1;
+}
+
+.viewer-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-image-container {
+  max-width: 80vw;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#viewer-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.close-viewer {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-viewer:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+.viewer-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.viewer-nav:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.viewer-prev {
+  left: 20px;
+}
+
+.viewer-next {
+  right: 20px;
+}
+
+.viewer-counter {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+
+/* Footer */
+.footer { background:#000; color:#fff; padding:40px 20px; text-align:center; overflow-x: hidden; transition: background-color 0.3s ease; }
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+  color: #474af0;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.footer-social a {
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.footer-social a:hover {
+  color: #474af0;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Loading */
+#loading-screen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; justify-content:center; align-items:center; z-index:9999; color:#fff; text-align:center; flex-direction:column; overflow:hidden; }
+
+/* Ini adalah style .hidden untuk loading screen Anda. */
+/* Ini TIDAK AKAN bentrok dengan player lagi. */
+.hidden {
+  opacity: 0;
+  transform: translateY(-200px);
+}
+
+.fall {
+  animation: fall 0.9s forwards;
+}
+
+@keyframes fall {
+  0% {
+    opacity:0;
+    transform: translateY(-200px);
+  }
+  60% {
+    opacity:1;
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.loading-content h1,
+.loading-content h2,
+.loading-content i {
+  margin: 20px 0;
+}
+
+.sub-icons {
+  display:flex;
+  justify-content:center;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+/* Custom Logo Styles */
+.custom-logo {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+#main-page {
+  opacity:0;
+  transition: opacity 1s ease;
+}
+
+#main-page.visible {
+  opacity:1;
+}
+
+/* Cursor blink for typing */
+.cursor { animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1;}50%{opacity:0;} }
+
+/* Dark/Light Mode Toggle */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #120f12;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background: rgba(30, 30, 30, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+body.dark-mode .ul-list {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .ul-list li a,
+body.dark-mode .ul-list li i {
+  color: #e0e0e0;
+}
+
+body.dark-mode .ul-list li:hover {
+  background-color: #333;
+}
+
+body.dark-mode .ul-list li.active {
+  background-color: #474af0;
+}
+
+body.dark-mode .home-p {
+  color: #e0e0e0;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .info-home h1,
+body.dark-mode .about h1,
+body.dark-mode .team h1 {
+  color: #e0e0e0;
+}
+
+body.dark-mode .info-p,
+body.dark-mode .info-p2 {
+  color: #b0b0b0;
+}
+
+body.dark-mode .follow ul a {
+  color: #e0e0e0;
+}
+
+body.dark-mode .about-info p {
+  color: #b0b0b0;
+}
+
+body.dark-mode .info-team p {
+  color: #b0b0b0;
+}
+
+body.dark-mode .member-card-simple {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .scroll-hint {
+  color: #b0b0b0;
+}
+
+body.dark-mode .footer {
+  background-color: #0a0a0a;
+}
+
+body.dark-mode hr {
+  background-color: #333;
+}
+
+body.dark-mode .theme-toggle {
+  background: rgba(30, 30, 30, 0.95);
+  color: #e0e0e0;
+}
+
+/* Dark mode untuk video */
+body.dark-mode .video-container {
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .about-video {
+  border: 1px solid #444;
+}
+
+/* Back to top button */
+#back-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #474af0;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(71, 74, 240, 0.3);
+}
+
+#back-to-top:hover {
+  transform: scale(1.1);
+  background: #2c36d9;
+}
+
+/* Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+
+.active-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s ease-out;
+}
+
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.6s ease-out;
+}
+
+.active-reveal.slide-in-left,
+.active-reveal.slide-in-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Responsive Design for Video */
+@media (max-width: 1024px) {
+  .video-container {
+    width: 200px;
+    height: 355px;
+  }
+  
+  .video-popup-content {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-container {
+    width: 180px;
+    height: 320px;
+    margin: 0 auto;
+  }
+  
+  .video-overlay {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  
+  .video-popup-content {
+    max-width: 98%;
+  }
+  
+  #popup-video {
+    max-height: 70vh;
+  }
+  
+  .close-video-popup {
+    top: -40px;
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-container {
+    width: 160px;
+    height: 285px;
+  }
+  
+  .video-overlay {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  
+  .video-overlay i {
+    font-size: 14px;
+  }
+  
+  #popup-video {
+    max-height: 60vh;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .home, .about, .team {
+    margin: 120px 100px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .home, .about, .team {
+    margin: 120px 50px;
+  }
+
+  .home-container, .about-container {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .home img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+
+  .info-home h1 {
+    font-size: 50px;
+  }
+
+  .info-home h3 {
+    font-size: 30px;
+  }
+
+  .ul-list {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 8px 15px;
+  }
+
+  .member-card-simple {
+    flex: 0 0 400px;
+  }
+  
+  .member-photo-container {
+    height: 225px;
+  }
+
+  .custom-logo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    display: none;
+  }
+
+  .home, .about, .team {
+    margin: 100px 20px;
+  }
+
+  .home-container, .about-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .home img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .follow {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .follow ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .info-home h1 {
+    font-size: 40px;
+  }
+
+  .info-home h3 {
+    font-size: 24px;
+  }
+
+  .member-card-simple {
+    flex: 0 0 350px;
+  }
+
+  .member-photo-container {
+    height: 197px;
+  }
+  
+  .theme-toggle {
+    bottom: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .viewer-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .viewer-prev {
+    left: 10px;
+  }
+
+  .viewer-next {
+    right: 10px;
+  }
+
+  .custom-logo {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home, .about, .team {
+    margin: 80px 15px;
+  }
+
+  .info-home h1 {
+    font-size: 32px;
+  }
+
+  .info-home h3 {
+    font-size: 20px;
+  }
+
+  .home-p, .about p, .team p {
+    font-size: 12px;
+  }
+
+  .member-card-simple {
+    flex: 0 0 300px;
+  }
+
+  .member-photo-container {
+    height: 169px;
+  }
+
+  .team-member-scroll {
+    gap: 20px;
+  }
+
+  .music-info {
+    font-size: 10px;
+    min-width: 60px;
+  }
+  
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .viewer-nav {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .custom-logo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Additional utility classes */
+.text-center { text-align:center; }
+.flex { display:flex; }
+.flex-column { flex-direction:column; }
+.items-center { align-items:center; }
+.justify-center { justify-content:center; }
+.w-full { width:100%; }
+.h-full { height:100%; }
+
+/* Smooth transitions for all interactive elements */
+button, a, .video-container, .member-card-simple {
+  transition: all 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+button:focus, a:focus {
+  outline: 2px solid #474af0;
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background: #474af0;
+  color: white;
+}
+
+::-moz-selection {
+  background: #474af0;
+  color: white;
+}
+
+/* ------------------ MODERN MUSIC PLAYER STYLES (LEFT BOTTOM + THEME AWARE) ------------------ */
+:root {
+  --primary: #474af0;
+  --accent: #9b5cf6;
+  --muted: rgba(0,0,0,0.6);
+  --card-bg: rgba(255,255,255,0.98);
+  --card-text: #111;
+  --card-border: rgba(0,0,0,0.06);
+}
+
+/* --- PERUBAHAN 1: Mengganti 'width' agar fleksibel di HP --- */
+.modern-music-player {
+  position: fixed;
+  left: 20px;           /* moved to left bottom */
+  right: auto;
+  bottom: 20px;
+  width: calc(100% - 40px); /* Lebar fleksibel: 100% - (20px kiri + 20px kanan) */
+  max-width: 340px;         /* Batas lebar maksimum 340px */
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  z-index: 2000;
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--card-border);
+  font-family: "Montserrat", sans-serif;
+  color: var(--card-text);
+  
+  /* --- PERBAIKAN: Transisi untuk "kolaps" --- */
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, 
+              padding-top 0.4s ease, padding-bottom 0.4s ease;
+}
+
+
+/* --- PERBAIKAN: Menggunakan .minimized (bukan .hidden) --- */
+/* Ini adalah metode "KOLAPS" yang Anda inginkan */
+
+/* 1. Atur transisi untuk header dan controls */
+.modern-header {
+  transition: opacity 0.3s ease, max-height 0.4s ease, 
+              margin-bottom 0.4s ease, visibility 0.3s ease;
+  max-height: 80px; /* Cukup untuk tinggi album art */
+  opacity: 1;
+  overflow: hidden; 
+  visibility: visible;
+  /* (margin-bottom: 8px; sudah ada dari style asli) */
+}
+
+.modern-controls {
+  transition: opacity 0.3s ease, max-height 0.4s ease, 
+              margin-top 0.4s ease, visibility 0.3s ease;
+  max-height: 100px; /* Cukup untuk tinggi controls */
+  opacity: 1;
+  overflow: hidden;
+  visibility: visible;
+  /* (margin-top: 6px; sudah ada dari style asli) */
+}
+
+/* 2. Saat .minimized, kolapskan semuanya JADI 0 */
+/* Toggle TIDAK akan bergerak karena padding-top tidak 0 */
+.modern-music-player.minimized {
+  padding-bottom: 0;
+}
+
+.modern-music-player.minimized .modern-header,
+.modern-music-player.minimized .modern-controls {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+/* ------------------------------------------- */
+
+
+/* toggle button now placed above left edge */
+.modern-toggle {
+  position:absolute;
+  top:-32px;
+  left:12px;              /* align toggle to left */
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:none;
+  background:var(--primary);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 24px rgba(71,74,240,0.2);
+  cursor:pointer;
+  font-size:16px;
+  /* Tambahkan transisi agar tidak "lompat" saat dark mode */
+  transition: background 0.25s ease;
+}
+
+/* header and meta */
+.modern-header { display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.modern-album { width:64px; height:64px; border-radius:8px; object-fit:cover; box-shadow:0 8px 30px rgba(0,0,0,0.12); }
+.modern-meta { flex:1; display:flex; flex-direction:column; gap:4px; min-width: 0; /* Untuk mencegah overflow text */ }
+.modern-title { font-weight:700; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.modern-artist { font-size:13px; color:var(--muted); }
+.modern-lyrics { font-size:12px; color:rgba(0,0,0,0.75); max-height:42px; overflow:hidden; white-space:pre-line; }
+
+/* controls */
+.modern-controls { display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+.modern-buttons { display:flex; gap:12px; align-items:center; justify-content:center; }
+.modern-btn { background:none; border:none; cursor:pointer; font-size:16px; padding:8px; color:var(--primary); }
+.modern-play { background:linear-gradient(90deg,var(--primary),var(--accent)); color:#fff; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 10px 24px rgba(75,70,250,0.18); border:none; cursor:pointer; }
+
+.modern-progress-container { height:8px; background:rgba(0,0,0,0.06); border-radius:999px; overflow:hidden; cursor:pointer; }
+.modern-progress { height:100%; width:0%; background: linear-gradient(90deg,var(--primary),var(--accent)); transition: width .06s linear; border-radius:999px; }
+
+.modern-time { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+
+/* theme-aware dark mode: when body has dark-mode class, switch variables */
+body.dark-mode {
+  --card-bg: rgba(20,18,20,0.86);
+  --card-text: #e6e6e6;
+  --card-border: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.65);
+  --primary: #7c84ff; /* slightly brighter in dark mode */
+  --accent: #c09bff;
+}
+
+/* ensure buttons adapt in dark mode */
+body.dark-mode .modern-play { box-shadow: 0 10px 24px rgba(124,132,255,0.14); }
+body.dark-mode .modern-btn { color: var(--primary); }
+body.dark-mode .modern-artist { color: var(--muted); } /* perbaikan kecil */
+body.dark-mode .modern-lyrics { color: rgba(255,255,255,0.85); } /* perbaikan kecil */
+body.dark-mode .modern-time { color: var(--muted); } /* perbaikan kecil */
+body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); } /* perbaikan kecil */
+
+
+/* responsive */
+/* --- PERUBAHAN 2: Aturan ini dinonaktifkan --- */
+/* Aturan ini yang menyebabkan player menjadi full-width dan tumpang tindih */
+@media (max-width:820px) {
+  /* .modern-music-player { width: calc(100% - 32px); left:16px; right:16px; } */
+}
+
+/* --- PERUBAHAN 3: Aturan 'bottom' di bawah ini dinonaktifkan --- */
+@media (max-width: 768px) {
+  /* Saat header nav disembunyikan, tombol back-to-top mungkin tumpang tindih
+     dengan theme toggle. Pindahkan back-to-top sedikit ke atas. */
+  #back-to-top {
+    bottom: 80px; 
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .theme-toggle {
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  /* PERBAIKAN: Aturan 'bottom' ini tidak lagi diperlukan karena 
+    player sudah kembali ke pojok kiri (tidak full-width).
+    Biarkan player menggunakan 'bottom: 20px' dari aturan default.
+  */
+  /*
+  .modern-music-player {
+    bottom: 65px; 
+  }
+  */
+
+  /* Jika layar sangat kecil, pindahkan player ke bawah saat theme-toggle di kanan */
+  @media (max-width: 480px) {
+    /*
+    .modern-music-player {
+        bottom: 10px;
+    }
+    */
+    #back-to-top {
+       bottom: 70px;
+       right: 10px;
+       width: 40px;
+       height: 40px;
+    }
+  }
+}
+
+/* ------------------ END MODERN MUSIC PLAYER STYLES ------------------ */

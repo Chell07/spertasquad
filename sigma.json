@@ -1,0 +1,12 @@
+{
+    "music": {
+        "title": "idk",
+        "artist": "idk",
+        "albumArt": "images/sigma.jpg",
+        "audioFile": "music/sigma.mp3",
+        "duration": 180,
+        "timeSync": [
+{ "time": 0.0, "text": "Lyrics Belum Tersedia" }
+        ]
+    }
+}

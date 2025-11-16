@@ -1,0 +1,12 @@
+{
+    "music": {
+        "title": "Rap Game",
+        "artist": "The Notorious",
+        "albumArt": "images/sperta.jpg",
+        "audioFile": "music/sperta.mp3",
+        "duration": 180,
+        "timeSync": [
+{ "time": 0.0, "text": "Lyrics Belum Tersedia" }
+        ]
+    }
+}

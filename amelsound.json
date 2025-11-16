@@ -1,0 +1,17 @@
+{
+    "music": {
+        "title": "Message In A Bottle",
+        "artist": "taylor",
+        "albumArt": "images/amelsound.jpg",
+        "audioFile": "music/amelsound.mp3",
+        "duration": 180,
+        "timeSync": [
+{ "time": 0.0, "text": "And now I'm standing here hoping" },
+{ "time": 2.6, "text": "it gets to you" },
+{ "time": 4.9, "text": "'Cause you could be the one that I love'" },
+{ "time": 8.5, "text": "I could be the one that you dream of" },
+{ "time": 12.5, "text": "A message in a bottle is all I can do" },
+{ "time": 15.5, "text": "Standing here, hopin' it gets to you >//<" }
+        ]
+    }
+}
