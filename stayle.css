@@ -1124,8 +1124,8 @@ button:focus, a:focus {
   left: 20px;           /* moved to left bottom */
   right: auto;
   bottom: 20px;
-  width: calc(100% - 40px); /* Lebar fleksibel: 100% - (20px kiri + 20px kanan) */
-  max-width: 340px;         /* Batas lebar maksimum 340px */
+  width: 340px;             /* <-- DIUBAH: Lebar standar di desktop */
+  max-width: calc(100% - 100px); /* <-- DIUBAH: Otomatis menyusut di HP & memberi ruang */
   background: var(--card-bg);
   border-radius: 12px;
   padding: 12px;

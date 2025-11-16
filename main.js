@@ -1,10 +1,11 @@
 /**
  * main.js (FULL, updated) - Modern music player integrated with your site
  * - Fixed loading-screen behavior.
+ * - MODIFIED: Added dynamic team loader.
  *
- * === PERUBAHAN OLEH GEMINI (v3.1) ===
- * - Menghapus baris 'Nothing to do.' yang salah ketik dan menyebabkan error.
- * - Fungsionalitas (membaca title/artist dari JSON) tetap sama.
+ * === PERUBAHAN OLEH GEMINI (v3.2) ===
+ * - Menambahkan initDynamicTeamLoader()
+ * - Mengubah init() untuk memanggil loader baru
  * === AKHIR PERUBAHAN ===
  */
 
@@ -304,7 +305,6 @@ const Site = (function(){
     if (!audio) return;
     audio.addEventListener('loadedmetadata', onLoadedMetadata);
     audio.addEventListener('timeupdate', onTimeUpdate);
-    // ===== BARIS YANG SALAH SUDAH DIHAPUS DARI SINI =====
     audio.addEventListener('ended', onEnded);
     audio.addEventListener('play', () => { isPlaying = true; updatePlayIcon(); startRAF(); });
     audio.addEventListener('pause', () => { isPlaying = false; updatePlayIcon(); cancelRAF(); });
@@ -318,18 +318,32 @@ const Site = (function(){
     const totalImages = document.getElementById('total-images');
     if (!viewer || !viewerImage) return;
 
+    // ----- INI BAGIAN PENTING -----
+    // Kita cari semua gambar .member-photo-simple YANG SUDAH DIBUAT
     const imgs = Array.from(document.querySelectorAll('.member-photo-simple')).map(img => ({ src: img.src, alt: img.alt }));
+    
     if (totalImages) totalImages.textContent = imgs.length;
 
+    // Tambahkan listener ke setiap gambar
     document.querySelectorAll('.member-photo-simple').forEach((img, idx) => {
-      img.addEventListener('click', () => {
-        viewer.classList.add('active');
-        viewerImage.src = imgs[idx].src;
-        viewerImage.alt = imgs[idx].alt;
-        if (currentIndexEl) currentIndexEl.textContent = idx + 1;
-        document.body.style.overflow = 'hidden';
-      });
+      // Hapus listener lama jika ada (untuk mencegah duplikat)
+      img.replaceWith(img.cloneNode(true)); 
+      
+      // Ambil elemen baru yang sudah bersih
+      const newImg = document.querySelector(`.member-photo-simple[data-index="${idx}"]`);
+      
+      if (newImg) {
+        newImg.addEventListener('click', () => {
+          viewer.classList.add('active');
+          viewerImage.src = imgs[idx].src;
+          viewerImage.alt = imgs[idx].alt;
+          if (currentIndexEl) currentIndexEl.textContent = idx + 1;
+          document.body.style.overflow = 'hidden';
+        });
+      }
     });
+    // ----- BATAS BAGIAN PENTING -----
+
 
     const closeBtn = document.querySelector('.close-viewer');
     if (closeBtn) closeBtn.addEventListener('click', () => { viewer.classList.remove('active'); document.body.style.overflow = ''; });
@@ -338,11 +352,89 @@ const Site = (function(){
     const prevBtn = document.querySelector('.viewer-prev');
     const nextBtn = document.querySelector('.viewer-next');
     let idx = 0;
-    function update(i){ idx = (i + imgs.length) % imgs.length; viewerImage.src = imgs[idx].src; viewerImage.alt = imgs[idx].alt; if (currentIndexEl) currentIndexEl.textContent = idx+1; }
+    
+    // Perbarui fungsi update untuk membaca index dari gambar yang diklik
+    function update(i){ 
+        idx = (i + imgs.length) % imgs.length; 
+        viewerImage.src = imgs[idx].src; 
+        viewerImage.alt = imgs[idx].alt; 
+        if (currentIndexEl) currentIndexEl.textContent = idx+1; 
+    }
+    
+    // Update listener klik gambar untuk set 'idx' yang benar saat dibuka
+    document.querySelectorAll('.member-photo-simple').forEach((img, imgIdx) => {
+        img.addEventListener('click', () => {
+            idx = imgIdx; // Set index saat ini
+            viewer.classList.add('active');
+            viewerImage.src = imgs[idx].src;
+            viewerImage.alt = imgs[idx].alt;
+            if (currentIndexEl) currentIndexEl.textContent = idx + 1;
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
     if (prevBtn) prevBtn.addEventListener('click', () => update(idx-1));
     if (nextBtn) nextBtn.addEventListener('click', () => update(idx+1));
     document.addEventListener('keydown', (e) => { if (viewer.classList.contains('active')){ if (e.key==='Escape') viewer.classList.remove('active'); if (e.key==='ArrowLeft') update(idx-1); if (e.key==='ArrowRight') update(idx+1); }});
   }
+
+  // ===== FUNGSI BARU YANG DITAMBAHKAN =====
+  function initDynamicTeamLoader() {
+    const scrollContainer = document.querySelector('.team-member-scroll');
+    
+    if (!scrollContainer) {
+      console.warn('Elemen .team-member-scroll tidak ditemukan. Batal memuat tim.');
+      return;
+    }
+    
+    // Kosongkan container (jika ada sisa HTML)
+    scrollContainer.innerHTML = '';
+    
+    let photoCount = 0; // Untuk melacak jumlah foto yang berhasil dimuat
+
+    // Fungsi ini akan mengecek gambar satu per satu
+    function checkAndAddImage(index) {
+      const imgPath = `images/team${index}.jpg`;
+      const img = new Image(); // Buat objek gambar di memori
+
+      // JIKA GAMBAR BERHASIL DITEMUKAN/DIMUAT
+      img.onload = function() {
+        photoCount++; // Tambah hitungan
+        
+        // 1. Buat elemen HTML untuk kartu
+        const cardHTML = `
+          <div class="member-card-simple">
+            <div class="member-photo-container">
+              <img src="${imgPath}" alt="Sperta Squad Member ${index}" class="member-photo-simple" data-index="${index - 1}">
+            </div>
+          </div>
+        `;
+        
+        // 2. Masukkan HTML itu ke dalam scroll container
+        scrollContainer.insertAdjacentHTML('beforeend', cardHTML);
+        
+        // 3. Coba cek gambar berikutnya (rekursif)
+        checkAndAddImage(index + 1);
+      };
+      
+      // JIKA GAMBAR GAGAL DITEMUKAN (ERROR 404)
+      img.onerror = function() {
+        // 4. File tidak ditemukan. Berhenti.
+        console.log(`Deteksi tim selesai. Ditemukan ${photoCount} anggota.`);
+        
+        // 5. PENTING: Sekarang panggil initImageViewer()
+        // untuk menambahkan klik listener ke gambar-gambar yang baru kita buat.
+        initImageViewer(); 
+      };
+      
+      // 6. Mulai proses pengecekan
+      img.src = imgPath;
+    }
+    
+    // 3. Mulai pengecekan dari file team1.jpg
+    checkAndAddImage(1);
+  }
+  // ===== BATAS FUNGSI BARU =====
 
   function initVideoPopup(){
     const videoPopup = document.getElementById('video-popup');
@@ -547,7 +639,11 @@ const Site = (function(){
   function init(){
     attachModernUI();
     loadTrack(0); // <-- Ini akan otomatis memuat 'amelsound.mp3' DAN 'amelsound.json'
-    initImageViewer();
+    
+    // ===== INI BAGIAN YANG DIUBAH =====
+    initDynamicTeamLoader(); // Ini akan memuat gambar, LALU memanggil initImageViewer()
+    // ==================================
+    
     initVideoPopup();
     initNavAndBackToTop();
     initRevealObserver();
