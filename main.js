@@ -7,9 +7,8 @@
  * - Lyric sync
  */
 
-/* ============================
+/*
    MUSIC PLAYLIST - EDIT HERE
-   ============================
 */
 const musicFiles = [
   'music/amelsound.mp3',
@@ -27,7 +26,7 @@ const Site = (function(){
   // Elements
   const audio = document.getElementById('background-music');
 
-  // Modern UI elements (must exist in HTML)
+  // Modern UI elements 
   const modern = {
     container: document.getElementById('modern-music-player'),
     toggle: document.getElementById('modern-toggle'),
@@ -66,7 +65,7 @@ const Site = (function(){
     return path.split('/').pop().replace(/\.[^/.]+$/, '');
   }
 
-  // Fungsi ini sekarang HANYA digunakan sebagai FALLBACK
+  // Digunakan sebagai fallback
   function metaFromPath(path){
     const base = baseName(path);
     const title = base.replace(/[-_]/g, ' ');
@@ -376,7 +375,7 @@ const Site = (function(){
   
   
   // =========================================================================
-  // === FUNGSI initAnonymousFeature (v3.5 - Admin + Kunci Aman) ===
+  // === FUNGSI initAnonymousFeature (Admin + Kunci Aman) ===
   // =========================================================================
   function initAnonymousFeature() {
     // Cek apakah Firebase, Auth, dan Kunci sudah ter-load
@@ -396,7 +395,6 @@ const Site = (function(){
     }
     
     try {
-      // Inisialisasi Firebase (Gunakan 'if' untuk mencegah error 'already exists')
       // Variabel 'firebaseConfig' diambil dari file 'config.js'
       if (!firebase.apps.length) {
           firebase.initializeApp(firebaseConfig);
@@ -451,7 +449,7 @@ const Site = (function(){
       // === AKHIR LOGIKA AUTENTIKASI ===
 
 
-      // --- Fitur 1: Character Counter (Tidak Berubah) ---
+      // --- Fitur 1: Character Counter ---
       messageInput.addEventListener('input', () => {
         const length = messageInput.value.length;
         const maxLength = messageInput.maxLength;
@@ -464,7 +462,7 @@ const Site = (function(){
         }
       });
 
-      // --- Fitur 2: Kirim Pesan (Tidak Berubah) ---
+      // --- Fitur 2: Kirim Pesan ---
       submitButton.addEventListener('click', async () => {
         const messageText = messageInput.value.trim();
         if (messageText.length < 5) { alert('Pesan terlalu pendek (minimal 5 karakter).'); return; }
@@ -490,7 +488,7 @@ const Site = (function(){
         }
       });
 
-      // --- Fitur 3: Tampilkan Pesan (DIMODIFIKASI) ---
+      // --- Fitur 3: Tampilkan Pesan ---
       let messagesListener = null;
       
       function loadMessages() {
@@ -692,7 +690,7 @@ const Site = (function(){
     }
   }
 
-  /* ----------------- Loading & Typing (FIXED) ----------------- */
+  /* ----------------- Loading & Typing ----------------- */
   function initLoadingAndTyping(){
     const loadingScreen = document.getElementById('loading-screen');
     const loadingText = document.getElementById('loading-text');
