@@ -1,0 +1,10 @@
+# .gitignore
+
+# Abaikan file konfigurasi yang berisi kunci rahasia
+config.js
+
+# Folder cache dan log Firebase
+.firebase/
+
+# Folder 'y' (jika ini bukan bagian dari source code)
+y/

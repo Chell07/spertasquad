@@ -1,12 +1,10 @@
 /**
- * main.js (FULL, updated) - Modern music player integrated with your site
- * - Fixed loading-screen behavior.
- * - MODIFIED: Added dynamic team loader.
- *
- * === PERUBAHAN OLEH GEMINI (v3.2) ===
- * - Menambahkan initDynamicTeamLoader()
- * - Mengubah init() untuk memanggil loader baru
- * === AKHIR PERUBAHAN ===
+ * main.js (FINAL - v3.5 - Kunci Diamankan)
+ * - KONFIGURASI KUNCI DIPINDAHKAN ke config.js (yang di-gitignore)
+ * - Admin feature (login/logout/delete)
+ * - Admin icon (top-right)
+ * - Dynamic team loader
+ * - Lyric sync
  */
 
 /* ============================
@@ -78,7 +76,6 @@ const Site = (function(){
 
   /* ----------------- audio controls ----------------- */
   
-  // === FUNGSI loadTrack YANG DIPERBARUI SECARA SIGNIFIKAN ===
   function loadTrack(index){
     if (!audio) return;
     if (!musicFiles || musicFiles.length === 0) {
@@ -92,63 +89,46 @@ const Site = (function(){
     audio.src = path;
     audio.load();
 
-    // Reset state lirik & UI sementara
     currentLyrics = [];
     currentLyricIndex = -1;
-    modern.lyrics.textContent = '...'; // Placeholder saat memuat
+    modern.lyrics.textContent = '...'; 
     
-    const base = baseName(path); // e.g., "sperta"
-    const lyricFilePath = `${base}.json`; // e.g., "sperta.json"
+    const base = baseName(path); 
+    const lyricFilePath = `${base}.json`; 
 
     console.log(`Memuat lagu: ${path}. Mencoba lirik/meta dari: ${lyricFilePath}`);
 
-    // Fetch lirik DAN metadata dari file JSON
     fetch(lyricFilePath)
       .then(res => {
-          // Cek jika file tidak ditemukan (404)
           if (!res.ok) {
             throw new Error(`File JSON '${lyricFilePath}' tidak ditemukan.`);
           }
           return res.json();
       })
       .then(data => {
-        // === KASUS SUKSES: File JSON Ditemukan dan Valid ===
         if (data.music) {
           const musicData = data.music;
-          
-          // 1. Muat Lirik
           currentLyrics = musicData.timeSync || [];
-          updateLyrics(0); // Tampilkan lirik pertama/placeholder
+          updateLyrics(0); 
 
-          // 2. Siapkan Metadata dari JSON
-          // Gunakan data JSON, tapi siapkan fallback ke nama file jika data JSON kosong
           const title = musicData.title || base.replace(/[-_]/g, ' '); 
-          const artist = musicData.artist || ""; // Artis dari JSON
-          const img = musicData.albumArt || `images/${base}.jpg`; // Gambar dari JSON
+          const artist = musicData.artist || ""; 
+          const img = musicData.albumArt || `images/${base}.jpg`;
           
-          // 3. Render Metadata dari JSON
           renderMeta({ title: title, artist: artist, img: img });
 
         } else {
-          // JSON ada tapi formatnya salah
           throw new Error(`Format file JSON '${lyricFilePath}' salah.`);
         }
       })
       .catch(err => {
-        // === KASUS GAGAL: File JSON Tidak Ada (404) atau Format Salah ===
         console.warn(`Gagal memuat metadata/lirik dari ${lyricFilePath}:`, err.message);
-        
-        // 1. Set Lirik Gagal
         currentLyrics = [];
         modern.lyrics.textContent = 'Lirik tidak tersedia.'; 
-        
-        // 2. Render Metadata FALLBACK (pakai nama file)
-        const meta = metaFromPath(path); // {title: "sperta", artist: "", img: "images/sperta.jpg"}
+        const meta = metaFromPath(path);
         renderMeta(meta);
       });
   }
-  // ======================================
-
 
   function play(){
     if (!audio || !audio.src) return;
@@ -176,7 +156,7 @@ const Site = (function(){
   }
 
   function next(){
-    loadTrack(currentIndex - 1);
+    loadTrack(currentIndex + 1);
     if (isPlaying) setTimeout(()=> play(), 150);
   }
 
@@ -185,13 +165,10 @@ const Site = (function(){
     modern.playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
   }
 
-  // Fungsi ini tidak berubah, hanya menerima data dan menampilkannya
   function renderMeta(meta){
     if (!modern) return;
     modern.title.textContent = meta.title || 'Unknown';
-    modern.artist.textContent = meta.artist || ''; // Akan menampilkan artis jika ada
-    
-    // Set gambar album, tapi gunakan fallback jika gagal
+    modern.artist.textContent = meta.artist || ''; 
     modern.album.src = meta.img || 'images/elaina.jpg';
   }
 
@@ -232,7 +209,7 @@ const Site = (function(){
       if (audio && audio.duration) {
         const currentTime = audio.currentTime || 0;
         updateTimeUI(currentTime, audio.duration);
-        updateLyrics(currentTime); // PANGGILAN UPDATE LIRIK
+        updateLyrics(currentTime); 
       }
       rafId = requestAnimationFrame(step);
     };
@@ -244,7 +221,6 @@ const Site = (function(){
     rafId = null;
   }
   
-  // Fungsi sinkronisasi lirik (tidak berubah)
   function updateLyrics(time) {
     if (!currentLyrics || currentLyrics.length === 0) return; 
 
@@ -266,7 +242,6 @@ const Site = (function(){
       if (currentLyricText) {
         modern.lyrics.textContent = currentLyricText;
       } else if (currentLyricIndex === -1 && currentLyrics.length > 0) {
-         // Jika lagu baru dimulai dan belum ada lirik, tampilkan placeholder
         modern.lyrics.textContent = '...';
       }
     }
@@ -318,32 +293,25 @@ const Site = (function(){
     const totalImages = document.getElementById('total-images');
     if (!viewer || !viewerImage) return;
 
-    // ----- INI BAGIAN PENTING -----
-    // Kita cari semua gambar .member-photo-simple YANG SUDAH DIBUAT
     const imgs = Array.from(document.querySelectorAll('.member-photo-simple')).map(img => ({ src: img.src, alt: img.alt }));
     
     if (totalImages) totalImages.textContent = imgs.length;
+    
+    let currentViewerIndex = 0;
 
-    // Tambahkan listener ke setiap gambar
     document.querySelectorAll('.member-photo-simple').forEach((img, idx) => {
-      // Hapus listener lama jika ada (untuk mencegah duplikat)
-      img.replaceWith(img.cloneNode(true)); 
+      const newImg = img.cloneNode(true);
+      img.parentNode.replaceChild(newImg, img);
       
-      // Ambil elemen baru yang sudah bersih
-      const newImg = document.querySelector(`.member-photo-simple[data-index="${idx}"]`);
-      
-      if (newImg) {
-        newImg.addEventListener('click', () => {
+      newImg.addEventListener('click', () => {
+          currentViewerIndex = idx; 
           viewer.classList.add('active');
-          viewerImage.src = imgs[idx].src;
-          viewerImage.alt = imgs[idx].alt;
-          if (currentIndexEl) currentIndexEl.textContent = idx + 1;
+          viewerImage.src = imgs[currentViewerIndex].src;
+          viewerImage.alt = imgs[currentViewerIndex].alt;
+          if (currentIndexEl) currentIndexEl.textContent = currentViewerIndex + 1;
           document.body.style.overflow = 'hidden';
-        });
-      }
+      });
     });
-    // ----- BATAS BAGIAN PENTING -----
-
 
     const closeBtn = document.querySelector('.close-viewer');
     if (closeBtn) closeBtn.addEventListener('click', () => { viewer.classList.remove('active'); document.body.style.overflow = ''; });
@@ -351,34 +319,19 @@ const Site = (function(){
 
     const prevBtn = document.querySelector('.viewer-prev');
     const nextBtn = document.querySelector('.viewer-next');
-    let idx = 0;
     
-    // Perbarui fungsi update untuk membaca index dari gambar yang diklik
-    function update(i){ 
-        idx = (i + imgs.length) % imgs.length; 
-        viewerImage.src = imgs[idx].src; 
-        viewerImage.alt = imgs[idx].alt; 
-        if (currentIndexEl) currentIndexEl.textContent = idx+1; 
+    function updateViewer(i){ 
+        currentViewerIndex = (i + imgs.length) % imgs.length; 
+        viewerImage.src = imgs[currentViewerIndex].src; 
+        viewerImage.alt = imgs[currentViewerIndex].alt; 
+        if (currentIndexEl) currentIndexEl.textContent = currentViewerIndex + 1; 
     }
     
-    // Update listener klik gambar untuk set 'idx' yang benar saat dibuka
-    document.querySelectorAll('.member-photo-simple').forEach((img, imgIdx) => {
-        img.addEventListener('click', () => {
-            idx = imgIdx; // Set index saat ini
-            viewer.classList.add('active');
-            viewerImage.src = imgs[idx].src;
-            viewerImage.alt = imgs[idx].alt;
-            if (currentIndexEl) currentIndexEl.textContent = idx + 1;
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    if (prevBtn) prevBtn.addEventListener('click', () => update(idx-1));
-    if (nextBtn) nextBtn.addEventListener('click', () => update(idx+1));
-    document.addEventListener('keydown', (e) => { if (viewer.classList.contains('active')){ if (e.key==='Escape') viewer.classList.remove('active'); if (e.key==='ArrowLeft') update(idx-1); if (e.key==='ArrowRight') update(idx+1); }});
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); updateViewer(currentViewerIndex - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); updateViewer(currentViewerIndex + 1); });
+    document.addEventListener('keydown', (e) => { if (viewer.classList.contains('active')){ if (e.key==='Escape') viewer.classList.remove('active'); if (e.key==='ArrowLeft') updateViewer(currentViewerIndex - 1); if (e.key==='ArrowRight') updateViewer(currentViewerIndex + 1); }});
   }
 
-  // ===== FUNGSI BARU YANG DITAMBAHKAN =====
   function initDynamicTeamLoader() {
     const scrollContainer = document.querySelector('.team-member-scroll');
     
@@ -387,21 +340,17 @@ const Site = (function(){
       return;
     }
     
-    // Kosongkan container (jika ada sisa HTML)
     scrollContainer.innerHTML = '';
     
-    let photoCount = 0; // Untuk melacak jumlah foto yang berhasil dimuat
+    let photoCount = 0; 
 
-    // Fungsi ini akan mengecek gambar satu per satu
     function checkAndAddImage(index) {
       const imgPath = `images/team${index}.jpg`;
-      const img = new Image(); // Buat objek gambar di memori
+      const img = new Image(); 
 
-      // JIKA GAMBAR BERHASIL DITEMUKAN/DIMUAT
       img.onload = function() {
-        photoCount++; // Tambah hitungan
+        photoCount++; 
         
-        // 1. Buat elemen HTML untuk kartu
         const cardHTML = `
           <div class="member-card-simple">
             <div class="member-photo-container">
@@ -410,31 +359,216 @@ const Site = (function(){
           </div>
         `;
         
-        // 2. Masukkan HTML itu ke dalam scroll container
         scrollContainer.insertAdjacentHTML('beforeend', cardHTML);
-        
-        // 3. Coba cek gambar berikutnya (rekursif)
         checkAndAddImage(index + 1);
       };
       
-      // JIKA GAMBAR GAGAL DITEMUKAN (ERROR 404)
       img.onerror = function() {
-        // 4. File tidak ditemukan. Berhenti.
         console.log(`Deteksi tim selesai. Ditemukan ${photoCount} anggota.`);
-        
-        // 5. PENTING: Sekarang panggil initImageViewer()
-        // untuk menambahkan klik listener ke gambar-gambar yang baru kita buat.
         initImageViewer(); 
       };
       
-      // 6. Mulai proses pengecekan
       img.src = imgPath;
     }
     
-    // 3. Mulai pengecekan dari file team1.jpg
     checkAndAddImage(1);
   }
-  // ===== BATAS FUNGSI BARU =====
+  
+  
+  // =========================================================================
+  // === FUNGSI initAnonymousFeature (v3.5 - Admin + Kunci Aman) ===
+  // =========================================================================
+  function initAnonymousFeature() {
+    // Cek apakah Firebase, Auth, dan Kunci sudah ter-load
+    if (typeof firebase === 'undefined' || typeof firebase.firestore === 'undefined' || typeof firebase.auth === 'undefined') {
+      console.error('Firebase SDK (Firestore/Auth) tidak ditemukan. Fitur anonim tidak akan berfungsi.');
+      const listElement = document.getElementById('anon-messages-list');
+      if(listElement) listElement.innerHTML = '<div class="anon-message-loading">Gagal memuat Firebase.</div>';
+      return;
+    }
+    
+    // Cek apakah file config.js sudah memuat variabel firebaseConfig
+    if (typeof firebaseConfig === 'undefined') {
+        console.error('File config.js tidak ditemukan atau variabel firebaseConfig tidak ada.');
+        const listElement = document.getElementById('anon-messages-list');
+        if(listElement) listElement.innerHTML = '<div class="anon-message-loading">Error Konfigurasi Kunci.</div>';
+        return;
+    }
+    
+    try {
+      // Inisialisasi Firebase (Gunakan 'if' untuk mencegah error 'already exists')
+      // Variabel 'firebaseConfig' diambil dari file 'config.js'
+      if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+      }
+      
+      const db = firebase.firestore();
+      const auth = firebase.auth(); 
+      const messagesCollection = db.collection('pesan_anonim');
+
+      // Ambil elemen DOM
+      const messageInput = document.getElementById('anon-message-input');
+      const submitButton = document.getElementById('anon-submit-btn');
+      const charCounter = document.getElementById('anon-char-counter');
+      const messagesList = document.getElementById('anon-messages-list');
+      const loginBtn = document.getElementById('admin-login-btn');
+      const logoutBtn = document.getElementById('admin-logout-btn');
+      
+      if (!messageInput || !submitButton || !charCounter || !messagesList || !loginBtn || !logoutBtn) {
+          console.error("Elemen DOM untuk fitur anonim atau admin tidak ditemukan.");
+          return;
+      }
+
+      // === LOGIKA AUTENTIKASI ===
+      let isAdmin = false; 
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      loginBtn.addEventListener('click', () => {
+          auth.signInWithPopup(provider).catch(error => {
+              console.error("Login gagal:", error);
+              alert("Login gagal. Coba lagi.");
+          });
+      });
+
+      logoutBtn.addEventListener('click', () => {
+          auth.signOut();
+      });
+
+      auth.onAuthStateChanged(user => {
+          if (user) {
+              console.log("Admin terdeteksi:", user.uid);
+              isAdmin = true;
+              loginBtn.style.display = 'none'; 
+              logoutBtn.style.display = 'block'; 
+          } else {
+              console.log("Admin logout.");
+              isAdmin = false;
+              loginBtn.style.display = 'block'; 
+              logoutBtn.style.display = 'none'; 
+          }
+          loadMessages();
+      });
+      // === AKHIR LOGIKA AUTENTIKASI ===
+
+
+      // --- Fitur 1: Character Counter (Tidak Berubah) ---
+      messageInput.addEventListener('input', () => {
+        const length = messageInput.value.length;
+        const maxLength = messageInput.maxLength;
+        charCounter.textContent = `${length} / ${maxLength}`;
+        
+        if (length >= maxLength) {
+          charCounter.classList.add('limit-reached');
+        } else {
+          charCounter.classList.remove('limit-reached');
+        }
+      });
+
+      // --- Fitur 2: Kirim Pesan (Tidak Berubah) ---
+      submitButton.addEventListener('click', async () => {
+        const messageText = messageInput.value.trim();
+        if (messageText.length < 5) { alert('Pesan terlalu pendek (minimal 5 karakter).'); return; }
+        if (messageText.length > 500) { alert('Pesan terlalu panjang (maksimal 500 karakter).'); return; }
+
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+        try {
+          await messagesCollection.add({
+            text: messageText,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          messageInput.value = '';
+          charCounter.textContent = '0 / 500';
+          charCounter.classList.remove('limit-reached');
+        } catch (error) {
+          console.error("Error mengirim pesan: ", error);
+          alert('Gagal mengirim pesan. Coba lagi nanti.');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Kirim';
+        }
+      });
+
+      // --- Fitur 3: Tampilkan Pesan (DIMODIFIKASI) ---
+      let messagesListener = null;
+      
+      function loadMessages() {
+          if (messagesListener) messagesListener(); 
+          
+          messagesListener = messagesCollection.orderBy('timestamp', 'desc').limit(50)
+            .onSnapshot(snapshot => {
+              messagesList.innerHTML = '';
+              
+              if (snapshot.empty) {
+                messagesList.innerHTML = '<div class="anon-message-loading">Belum ada pesan. Jadilah yang pertama!</div>';
+                return;
+              }
+
+              snapshot.forEach(doc => {
+                const data = doc.data();
+                const messageId = doc.id; 
+                const messageCard = document.createElement('div');
+                messageCard.className = 'anon-message-card';
+                
+                const date = data.timestamp ? data.timestamp.toDate().toLocaleString('id-ID', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short'
+                }) : 'Baru saja';
+                
+                const safeText = data.text
+                                    .replace(/</g, "&lt;")
+                                    .replace(/>/g, "&gt;");
+
+                const adminButtonHTML = isAdmin 
+                  ? `<button class="admin-delete-btn" data-id="${messageId}" title="Hapus pesan ini">
+                       <i class="fa-solid fa-trash-can"></i>
+                     </button>`
+                  : '';
+
+                messageCard.innerHTML = `
+                  ${adminButtonHTML}
+                  <p>${safeText}</p>
+                  <span>${date}</span>
+                `;
+                
+                messagesList.appendChild(messageCard);
+              });
+              
+            }, error => {
+                console.error("Error mengambil pesan: ", error);
+                messagesList.innerHTML = '<div class="anon-message-loading">Gagal memuat pesan.</div>';
+            });
+      }
+      
+      // === FITUR Hapus Pesan ===
+      messagesList.addEventListener('click', async (e) => {
+          const deleteButton = e.target.closest('.admin-delete-btn');
+          
+          if (deleteButton && isAdmin) {
+              const messageId = deleteButton.dataset.id; 
+              
+              if (confirm('Anda yakin ingin menghapus pesan ini secara permanen?')) {
+                  try {
+                      await messagesCollection.doc(messageId).delete();
+                      console.log("Pesan berhasil dihapus:", messageId);
+                  } catch (error) {
+                      console.error("Error menghapus pesan:", error);
+                      alert('Gagal menghapus pesan. (Pastikan UID Anda benar di Security Rules)');
+                  }
+              }
+          }
+      });
+      // === AKHIR FITUR HAPUS ===
+
+    } catch (e) {
+        console.error("Error saat inisialisasi Firebase:", e);
+        const listElement = document.getElementById('anon-messages-list');
+        if(listElement) listElement.innerHTML = '<div class="anon-message-loading">Error konfigurasi Firebase.</div>';
+    }
+  }
+  // ===== BATAS FUNGSI ANONIM/ADMIN =====
+
 
   function initVideoPopup(){
     const videoPopup = document.getElementById('video-popup');
@@ -638,11 +772,10 @@ const Site = (function(){
   /* ----------------- initialization ----------------- */
   function init(){
     attachModernUI();
-    loadTrack(0); // <-- Ini akan otomatis memuat 'amelsound.mp3' DAN 'amelsound.json'
+    loadTrack(0); 
     
-    // ===== INI BAGIAN YANG DIUBAH =====
-    initDynamicTeamLoader(); // Ini akan memuat gambar, LALU memanggil initImageViewer()
-    // ==================================
+    initDynamicTeamLoader(); 
+    initAnonymousFeature(); // Aktifkan Firebase + Auth
     
     initVideoPopup();
     initNavAndBackToTop();
@@ -662,6 +795,7 @@ const Site = (function(){
   return { init };
 })();
 
+// Variabel global (biarkan saja)
 let userData = null;
 let currentLyricIndex = -1;
 let songDuration = 60;

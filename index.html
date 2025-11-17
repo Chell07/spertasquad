@@ -97,7 +97,16 @@
                   <i class="fa-regular fa-users"></i>
                   <a href="#team">Our Team</a>
               </li>
+              <li>
+                  <i class="fa-regular fa-paper-plane"></i>
+                  <a href="#anonymous">Anonymous</a>
+              </li>
           </ul>
+      </div>
+
+      <div class="admin-icon-container">
+          <i id="admin-login-btn" class="fa-solid fa-user-shield admin-icon" title="Admin Login"></i>
+          <i id="admin-logout-btn" class="fa-solid fa-right-from-bracket admin-icon" title="Logout" style="display:none;"></i>
       </div>
   </header>
 
@@ -201,6 +210,36 @@
       </div>
   </section>
 
+  <section class="anonymous" id="anonymous">
+    <p>ANONYMOUS</p>
+    <h1>Kirim Pesan Anonim</h1>
+    <hr>
+    <div class="info-team">
+        <p>Ada masukan, pertanyaan, atau uneg-uneg? Sampaikan di sini tanpa nama.</p>
+    </div>
+
+    <div class="anonymous-container">
+        <div class="anon-form-container">
+            <h3>Tulis Pesan Anda</h3>
+            <textarea id="anon-message-input" placeholder="Ketik pesan Anda di sini..." maxlength="500"></textarea>
+            <div class="anon-form-footer">
+                <span id="anon-char-counter">0 / 500</span>
+                <button id="anon-submit-btn">
+                    <i class="fa-regular fa-paper-plane"></i> Kirim
+                </button>
+            </div>
+        </div>
+
+        <div class="anon-messages-container">
+            <h3>Pesan Terbaru</h3>
+            <div id="anon-messages-list">
+                <div class="anon-message-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Memuat pesan...
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
   <footer class="footer">
       <div class="footer-container">
           <h2 class="footer-logo">Sperta Squad</h2>
@@ -208,7 +247,8 @@
               <li><a href="#home">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#team">Our Team</a></li>
-          </ul>
+              <li><a href="#anonymous">Anonymous</a></li>
+              </ul>
           <div class="footer-social">
               <a href="https://github.com/Chell07" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
               <a href="https://discord.gg/qpKcxrxpu8" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
@@ -218,6 +258,12 @@
       </div>
   </footer>
 
+  <script src="config.js"></script> 
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  
   <script src="main.js"></script>
 </body>
 </html>
