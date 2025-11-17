@@ -1,4 +1,4 @@
-// config.example.js (Aman untuk GitHub)
+// setelah di atur dengan config firebase kalian, Ubah nama file menjadi config.js 
 
 const firebaseConfig = {
     apiKey: "GANTI_DENGAN_KUNCI_ANDA",
