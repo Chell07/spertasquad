@@ -141,6 +141,4 @@ Untuk menghapus pesan spam/kasar di kolom Anonymous:
 **Created with ❤️ by Sperta Squad**
 *Politeknik Negeri Manado*
 
-Feel free to modify and learn\!
-
-```
+Feel free to modify and learn!
