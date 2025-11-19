@@ -1118,14 +1118,14 @@ button:focus, a:focus {
   --card-border: rgba(0,0,0,0.06);
 }
 
-/* --- PERUBAHAN 1: Mengganti 'width' agar fleksibel di HP --- */
+/* Mengganti 'width' agar fleksibel di HP */
 .modern-music-player {
   position: fixed;
-  left: 20px;           /* moved to left bottom */
+  left: 20px;           
   right: auto;
   bottom: 20px;
-  width: 340px;             /* <-- DIUBAH: Lebar standar di desktop */
-  max-width: calc(100% - 100px); /* <-- DIUBAH: Otomatis menyusut di HP & memberi ruang */
+  width: 340px;             
+  max-width: calc(100% - 100px); 
   background: var(--card-bg);
   border-radius: 12px;
   padding: 12px;
@@ -1136,38 +1136,29 @@ button:focus, a:focus {
   font-family: "Montserrat", sans-serif;
   color: var(--card-text);
   
-  /* --- PERBAIKAN: Transisi untuk "kolaps" --- */
+  /* Transisi untuk "kolaps" */
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, 
               padding-top 0.4s ease, padding-bottom 0.4s ease;
 }
 
-
-/* --- PERBAIKAN: Menggunakan .minimized (bukan .hidden) --- */
-/* Ini adalah metode "KOLAPS" yang Anda inginkan */
-
-/* 1. Atur transisi untuk header dan controls */
 .modern-header {
   transition: opacity 0.3s ease, max-height 0.4s ease, 
               margin-bottom 0.4s ease, visibility 0.3s ease;
-  max-height: 80px; /* Cukup untuk tinggi album art */
+  max-height: 80px;
   opacity: 1;
   overflow: hidden; 
   visibility: visible;
-  /* (margin-bottom: 8px; sudah ada dari style asli) */
 }
 
 .modern-controls {
   transition: opacity 0.3s ease, max-height 0.4s ease, 
               margin-top 0.4s ease, visibility 0.3s ease;
-  max-height: 100px; /* Cukup untuk tinggi controls */
+  max-height: 100px;
   opacity: 1;
   overflow: hidden;
   visibility: visible;
-  /* (margin-top: 6px; sudah ada dari style asli) */
 }
 
-/* 2. Saat .minimized, kolapskan semuanya JADI 0 */
-/* Toggle TIDAK akan bergerak karena padding-top tidak 0 */
 .modern-music-player.minimized {
   padding-bottom: 0;
 }
@@ -1181,14 +1172,12 @@ button:focus, a:focus {
   pointer-events: none;
   visibility: hidden;
 }
-/* ------------------------------------------- */
-
 
 /* toggle button now placed above left edge */
 .modern-toggle {
   position:absolute;
   top:-32px;
-  left:12px;              /* align toggle to left */
+  left:12px;
   width:36px;
   height:36px;
   border-radius:50%;
@@ -1201,7 +1190,6 @@ button:focus, a:focus {
   box-shadow:0 8px 24px rgba(71,74,240,0.2);
   cursor:pointer;
   font-size:16px;
-  /* Tambahkan transisi agar tidak "lompat" saat dark mode */
   transition: background 0.25s ease;
 }
 
@@ -1230,30 +1218,23 @@ body.dark-mode {
   --card-text: #e6e6e6;
   --card-border: rgba(255,255,255,0.06);
   --muted: rgba(255,255,255,0.65);
-  --primary: #7c84ff; /* slightly brighter in dark mode */
+  --primary: #7c84ff; 
   --accent: #c09bff;
 }
 
 /* ensure buttons adapt in dark mode */
 body.dark-mode .modern-play { box-shadow: 0 10px 24px rgba(124,132,255,0.14); }
 body.dark-mode .modern-btn { color: var(--primary); }
-body.dark-mode .modern-artist { color: var(--muted); } /* perbaikan kecil */
-body.dark-mode .modern-lyrics { color: rgba(255,255,255,0.85); } /* perbaikan kecil */
-body.dark-mode .modern-time { color: var(--muted); } /* perbaikan kecil */
-body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); } /* perbaikan kecil */
+body.dark-mode .modern-artist { color: var(--muted); } 
+body.dark-mode .modern-lyrics { color: rgba(255,255,255,0.85); } 
+body.dark-mode .modern-time { color: var(--muted); } 
+body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); } 
 
-
-/* responsive */
-/* --- PERUBAHAN 2: Aturan ini dinonaktifkan --- */
-/* Aturan ini yang menyebabkan player menjadi full-width dan tumpang tindih */
 @media (max-width:820px) {
   /* .modern-music-player { width: calc(100% - 32px); left:16px; right:16px; } */
 }
 
-/* --- PERUBAHAN 3: Aturan 'bottom' di bawah ini dinonaktifkan --- */
 @media (max-width: 768px) {
-  /* Saat header nav disembunyikan, tombol back-to-top mungkin tumpang tindih
-     dengan theme toggle. Pindahkan back-to-top sedikit ke atas. */
   #back-to-top {
     bottom: 80px; 
     right: 10px;
@@ -1266,23 +1247,13 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
     right: 10px;
   }
   
-  /* PERBAIKAN: Aturan 'bottom' ini tidak lagi diperlukan karena 
-    player sudah kembali ke pojok kiri (tidak full-width).
-    Biarkan player menggunakan 'bottom: 20px' dari aturan default.
-  */
   /*
   .modern-music-player {
     bottom: 65px; 
   }
   */
 
-  /* Jika layar sangat kecil, pindahkan player ke bawah saat theme-toggle di kanan */
   @media (max-width: 480px) {
-    /*
-    .modern-music-player {
-        bottom: 10px;
-    }
-    */
     #back-to-top {
        bottom: 70px;
        right: 10px;
@@ -1292,11 +1263,7 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
   }
 }
 
-/* ------------------ END MODERN MUSIC PLAYER STYLES ------------------ */
-
-
-
-/* === TAMBAHAN UNTUK FITUR ANONIM === */
+/* TAMBAHAN UNTUK FITUR ANONIM */
 
 .anonymous {
   /* Meniru style .team */
@@ -1458,7 +1425,7 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
   font-size: 15px;
   color: #333;
   line-height: 1.6;
-  white-space: pre-wrap; /* Agar baris baru/enter tetap terlihat */
+  white-space: pre-wrap; 
   word-wrap: break-word;
   padding-bottom: 0;
   text-transform: none;
@@ -1575,27 +1542,24 @@ body.dark-mode .anon-message-card span {
     margin: 80px 15px;
   }
 }
-/* === AKHIR TAMBAHAN === */
 
-/* === TAMBAHAN UNTUK FITUR ADMIN === */
-
-/* === BARU: Admin Icon (Pojok Kanan Atas) === */
+/* Admin Icon */
 .admin-icon-container {
   position: absolute;
   top: 50%;
-  right: 30px; /* Jarak dari kanan */
+  right: 30px; 
   transform: translateY(-50%);
   display: flex;
   gap: 15px;
-  z-index: 1001; /* Di atas header blur */
+  z-index: 1001; 
 }
 
 .admin-icon {
   font-size: 22px;
-  color: #c09bff; /* Warna ungu-ish */
+  color: #c09bff;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 10px; /* Beri area klik yang lebih besar */
+  padding: 10px; 
   border-radius: 50%;
 }
 

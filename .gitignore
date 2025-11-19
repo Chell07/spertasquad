@@ -8,3 +8,7 @@ config.js
 
 # Folder 'y' (jika ini bukan bagian dari source code)
 y/
+n/
+
+firebase.json
+.firebaserc
