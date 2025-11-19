@@ -130,7 +130,7 @@ Agar website berjalan lancar, pastikan struktur foldermu seperti ini:
 
 Untuk menghapus pesan spam/kasar di kolom Anonymous:
 
-1.  Klik ikon **Perisai** (\<i class="fa-solid fa-user-shield"\>\</i\>) di header kanan atas.
+1.  Klik ikon **Perisai** di header kanan atas.
 2.  Login dengan akun Google Admin.
 3.  Klik tombol **Sampah** pada pesan yang ingin dihapus.
 
