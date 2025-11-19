@@ -5,7 +5,6 @@ Website profil resmi **Sperta Squad** (Computer Engineering Students - Polimdo).
 Website ini dirancang dengan tampilan modern, *fully responsive*, dan dilengkapi berbagai fitur interaktif seperti pemutar musik dengan lirik, galeri tim dinamis, serta fitur pesan anonim yang terintegrasi dengan database realtime.
 
 ![Preview Website](ss.jpg)
-*(Pastikan kamu punya file screenshot bernama ss.jpg untuk preview di sini)*
 
 ## ✨ Fitur Unggulan
 
