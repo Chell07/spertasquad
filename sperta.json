@@ -6,7 +6,7 @@
         "audioFile": "music/sperta.mp3",
         "duration": 180,
         "timeSync": [
-{ "time": 0.0, "text": "Lyrics Belum Tersedia" }
+{ "time": 0.0, "text": "Lyrics not found" }
         ]
     }
 }
