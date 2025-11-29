@@ -390,7 +390,7 @@ const Site = (function(){
     if (typeof firebaseConfig === 'undefined') {
         console.error('File config.js tidak ditemukan atau variabel firebaseConfig tidak ada.');
         const listElement = document.getElementById('anon-messages-list');
-        if(listElement) listElement.innerHTML = '<div class="anon-message-loading">Error Konfigurasi Kunci.</div>';
+        if(listElement) listElement.innerHTML = '<div class="anon-message-loading">Configuration Error.</div>';
         return;
     }
     
