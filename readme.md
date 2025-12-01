@@ -21,7 +21,7 @@ Website ini dirancang dengan tampilan modern, *fully responsive*, dan dilengkapi
 ### 1. Persiapan File
 Pastikan semua file berikut ada dalam satu folder utama:
 - `index.html`
-- `stayle.css`
+- `style.css`
 - `main.js`
 - Folder `images/` dan `music/`
 
