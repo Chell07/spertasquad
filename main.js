@@ -1,10 +1,9 @@
 /**
- * main.js (FINAL - v3.5 - Kunci Diamankan)
- * - KONFIGURASI KUNCI DIPINDAHKAN ke config.js (yang di-gitignore)
+ * - KONFIGURASI KUNCI DIPINDAHKAN ke config.js 
  * - Admin feature (login/logout/delete)
- * - Admin icon (top-right)
  * - Dynamic team loader
  * - Lyric sync
+ * - UPDATED: Theme Toggle Icon (Sun/Moon)
  */
 
 /*
@@ -284,7 +283,7 @@ const Site = (function(){
     audio.addEventListener('pause', () => { isPlaying = false; updatePlayIcon(); cancelRAF(); });
   }
 
-  /* ----------------- other site features (kept) ----------------- */
+  /* ----------------- other site features ----------------- */
   function initImageViewer(){
     const viewer = document.getElementById('image-viewer');
     const viewerImage = document.getElementById('viewer-image');
@@ -664,30 +663,53 @@ const Site = (function(){
     }
   }
 
+  /* ----------------- Theme Toggle (UPDATED: SUN/MOON ICON) ----------------- */
+  
+  // Helper: Update ikon berdasarkan mode
+  function updateThemeIcon(isDark) {
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (!themeToggle) return;
+
+    // Jika Dark Mode -> Muncul Bulan
+    // Jika Light Mode -> Muncul Matahari
+    if (isDark) {
+      themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; 
+    } else {
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+  }
+
   function initThemeToggle(){
     const themeToggle = document.querySelector('.theme-toggle');
+    
     if (!themeToggle) {
       const btn = document.createElement('button');
       btn.className = 'theme-toggle';
-      btn.innerHTML = '<i class="fas fa-moon"></i>';
+      // Icon default sementara
+      btn.innerHTML = '<i class="fas fa-sun"></i>'; 
       document.body.appendChild(btn);
       btn.addEventListener('click', toggleTheme);
     } else {
       themeToggle.addEventListener('click', toggleTheme);
     }
 
+    // Cek preferensi
     const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    if (saved === 'dark') document.body.classList.add('dark-mode');
+    
+    // Terapkan mode awal & update ikon
+    if (saved === 'dark') {
+      document.body.classList.add('dark-mode');
+      updateThemeIcon(true);
+    } else {
+      document.body.classList.remove('dark-mode');
+      updateThemeIcon(false);
+    }
   }
 
   function toggleTheme(){
-    if (document.body.classList.contains('dark-mode')) {
-      document.body.classList.remove('dark-mode');
-      localStorage.setItem('theme','light');
-    } else {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('theme','dark');
-    }
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon(isDark);
   }
 
   /* ----------------- Loading & Typing ----------------- */

@@ -1,4 +1,3 @@
-/* FULL stayle.css (player moved to left bottom + dark-mode integration) */
 * {
   margin: 0;
   padding: 0;
@@ -14,37 +13,63 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* NOTE: .music-controls (player lama) dihapus karena tidak lagi digunakan 
-  di HTML atau JS Anda. Anda sekarang menggunakan .modern-music-player.
-*/
-
-/* Header Styles FIXED - No Gap */
+/* =========================================
+   UPDATED: HEADER MELAYANG (FLOATING)
+   ========================================= */
 header {
   position: fixed;
-  top: 0;
+  top: 20px; /* Jarak dari atas agar melayang */
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  transition: background 0.3s ease;
+  background: transparent; /* Transparan, tidak ada background panjang */
+  border: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  border: none !important;
+  
+  /* Flexbox untuk menengahkan menu */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+  /* PENTING: Agar area kosong di kiri/kanan menu bisa ditembus klik */
+  pointer-events: none; 
 }
 
-/* (other site styles — preserved) */
-.header-list { margin: 0; padding: 15px 20px; }
+/* Container List Menu (Kapsul Tengah) */
+.header-list { margin: 0; padding: 0; }
 .div-list { display:flex; align-items:center; justify-content:center; padding:0; }
-.ul-list { list-style:none; display:flex; gap:3rem; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:10px 25px; border-radius:25px; margin:0; }
+
+.ul-list {
+  /* Aktifkan klik kembali untuk tombol menu */
+  pointer-events: auto; 
+  
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  
+  /* Glassmorphism / Efek Kaca */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  /* Shadow & Border halus */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  
+  /* Bentuk Kapsul */
+  padding: 12px 35px;
+  border-radius: 50px;
+  margin: 0;
+}
 
 .ul-list li {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border-radius: 25px;
   transition: 0.3s;
-  padding: 8px 15px;
+  padding: 8px 16px;
 }
 
 .ul-list li a {
@@ -57,6 +82,7 @@ header {
 
 .ul-list li.active {
   background-color: black;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .ul-list li.active a,
@@ -65,15 +91,57 @@ header {
 }
 
 .ul-list li:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(0,0,0,0.05);
 }
 
 .ul-list li.active:hover {
   background-color: #333;
 }
 
+/* Icon Admin Melayang (Pojok Kanan) */
+.admin-icon-container {
+  /* Aktifkan klik */
+  pointer-events: auto; 
+  
+  position: fixed; /* Fixed agar tetap di pojok layar */
+  top: 20px;       /* Samakan dengan header top */
+  right: 40px;     /* Jarak dari kanan */
+  display: flex;
+  gap: 15px;
+  z-index: 1001;
+  
+  /* Style Kapsul Kecil */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 15px;
+  border-radius: 50px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.admin-icon {
+  font-size: 20px;
+  color: #c09bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px; 
+  border-radius: 50%;
+}
+
+.admin-icon:hover {
+  color: #474af0;
+  background-color: rgba(71, 74, 240, 0.1);
+  transform: scale(1.1);
+}
+
+/* =========================================
+   END HEADER CHANGES
+   ========================================= */
+
+
 /* Home */
-.home { margin:160px 200px; padding-top:80px; margin-top:0; }
+.home { margin:160px 200px; padding-top:40px; margin-top:0; }
 .home-container { display:flex; gap:6rem; align-items:center; }
 
 .home-p {
@@ -98,7 +166,7 @@ header {
   margin-bottom: 20px;
   line-height: 1.1;
   transition: color 0.3s ease;
-  letter-spacing: -1px; /* Diambil dari duplikat */
+  letter-spacing: -1px; 
 }
 
 .info-home h3 {
@@ -604,8 +672,6 @@ hr {
 /* Loading */
 #loading-screen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; justify-content:center; align-items:center; z-index:9999; color:#fff; text-align:center; flex-direction:column; overflow:hidden; }
 
-/* Ini adalah style .hidden untuk loading screen Anda. */
-/* Ini TIDAK AKAN bentrok dengan player lagi. */
 .hidden {
   opacity: 0;
   transform: translateY(-200px);
@@ -696,14 +762,16 @@ body.dark-mode {
   color: #e0e0e0;
 }
 
+/* UPDATE DARK MODE HEADER */
 body.dark-mode header {
-  background: rgba(30, 30, 30, 0.95);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  border-bottom: none;
 }
 
 body.dark-mode .ul-list {
-  background-color: #1e1e1e;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background-color: rgba(30, 30, 30, 0.85); /* Gelap transparan */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 body.dark-mode .ul-list li a,
@@ -718,6 +786,23 @@ body.dark-mode .ul-list li:hover {
 body.dark-mode .ul-list li.active {
   background-color: #474af0;
 }
+
+/* UPDATE DARK MODE ADMIN ICON */
+body.dark-mode .admin-icon-container {
+  background-color: rgba(30, 30, 30, 0.85);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .admin-icon {
+  color: #c09bff;
+}
+
+body.dark-mode .admin-icon:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* END DARK MODE UPDATES */
 
 body.dark-mode .home-p {
   color: #e0e0e0;
@@ -948,7 +1033,7 @@ body.dark-mode .about-video {
 
 @media (max-width: 768px) {
   header {
-    display: none;
+    display: none; /* Hide header on mobile as per original design */
   }
 
   .home, .about, .team {
@@ -1053,11 +1138,6 @@ body.dark-mode .about-video {
   .team-member-scroll {
     gap: 20px;
   }
-
-  .music-info {
-    font-size: 10px;
-    min-width: 60px;
-  }
   
   .theme-toggle {
     width: 40px;
@@ -1118,7 +1198,6 @@ button:focus, a:focus {
   --card-border: rgba(0,0,0,0.06);
 }
 
-/* Mengganti 'width' agar fleksibel di HP */
 .modern-music-player {
   position: fixed;
   left: 20px;           
@@ -1136,7 +1215,6 @@ button:focus, a:focus {
   font-family: "Montserrat", sans-serif;
   color: var(--card-text);
   
-  /* Transisi untuk "kolaps" */
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, 
               padding-top 0.4s ease, padding-bottom 0.4s ease;
 }
@@ -1173,7 +1251,6 @@ button:focus, a:focus {
   visibility: hidden;
 }
 
-/* toggle button now placed above left edge */
 .modern-toggle {
   position:absolute;
   top:-32px;
@@ -1196,7 +1273,7 @@ button:focus, a:focus {
 /* header and meta */
 .modern-header { display:flex; gap:12px; align-items:center; margin-bottom:8px; }
 .modern-album { width:64px; height:64px; border-radius:8px; object-fit:cover; box-shadow:0 8px 30px rgba(0,0,0,0.12); }
-.modern-meta { flex:1; display:flex; flex-direction:column; gap:4px; min-width: 0; /* Untuk mencegah overflow text */ }
+.modern-meta { flex:1; display:flex; flex-direction:column; gap:4px; min-width: 0; }
 .modern-title { font-weight:700; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .modern-artist { font-size:13px; color:var(--muted); }
 .modern-lyrics { font-size:12px; color:rgba(0,0,0,0.75); max-height:42px; overflow:hidden; white-space:pre-line; }
@@ -1230,9 +1307,6 @@ body.dark-mode .modern-lyrics { color: rgba(255,255,255,0.85); }
 body.dark-mode .modern-time { color: var(--muted); } 
 body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); } 
 
-@media (max-width:820px) {
-  /* .modern-music-player { width: calc(100% - 32px); left:16px; right:16px; } */
-}
 
 @media (max-width: 768px) {
   #back-to-top {
@@ -1246,12 +1320,6 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
     bottom: 10px;
     right: 10px;
   }
-  
-  /*
-  .modern-music-player {
-    bottom: 65px; 
-  }
-  */
 
   @media (max-width: 480px) {
     #back-to-top {
@@ -1263,10 +1331,9 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
   }
 }
 
-/* TAMBAHAN UNTUK FITUR ANONIM */
+/* FITUR ANONIM */
 
 .anonymous {
-  /* Meniru style .team */
   margin:160px 200px; 
   display:flex; 
   align-items:center; 
@@ -1275,7 +1342,6 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
 }
 
 .anonymous p {
-  /* Meniru style .team p */
   padding-bottom: 20px;
   font-size: 13px;
   color: rgb(50, 50, 50);
@@ -1285,7 +1351,6 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
 }
 
 .anonymous h1 {
-  /* Meniru style .team h1 */
   font-family: "Open Sans", sans-serif;
   padding-bottom: 10px;
   font-weight: 700;
@@ -1293,7 +1358,6 @@ body.dark-mode .modern-progress-container { background: rgba(255,255,255,0.08); 
 }
 
 .anonymous hr {
-  /* Meniru style .team hr */
   width: 10%;
 }
 
@@ -1543,64 +1607,8 @@ body.dark-mode .anon-message-card span {
   }
 }
 
-/* Admin Icon */
-.admin-icon-container {
-  position: absolute;
-  top: 50%;
-  right: 30px; 
-  transform: translateY(-50%);
-  display: flex;
-  gap: 15px;
-  z-index: 1001; 
-}
-
-.admin-icon {
-  font-size: 22px;
-  color: #c09bff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 10px; 
-  border-radius: 50%;
-}
-
-.admin-icon:hover {
-  color: #474af0;
-  background-color: rgba(0, 0, 0, 0.05); /* Latar belakang samar saat di-hover */
-  transform: scale(1.1);
-}
-
-body.dark-mode .admin-icon {
-  color: #c09bff;
-}
-
-body.dark-mode .admin-icon:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Penyesuaian saat header disembunyikan di mobile */
-@media (max-width: 768px) {
-  .admin-icon-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    padding: 5px;
-    border-radius: 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  
-  body.dark-mode .admin-icon-container {
-    background: rgba(30, 30, 30, 0.9);
-  }
-}
-/* === AKHIR Admin Icon === */
-
-
-/* Tombol Hapus pada Kartu Pesan (Ini masih diperlukan) */
+/* Tombol Hapus pada Kartu Pesan */
 .anon-message-card {
-  /* Diperlukan agar tombol hapus bisa diposisikan */
   position: relative; 
 }
 
@@ -1624,7 +1632,6 @@ body.dark-mode .admin-icon:hover {
   z-index: 5;
 }
 
-/* Tampilkan jelas saat card di-hover */
 .anon-message-card:hover .admin-delete-btn {
   opacity: 1; 
 }
@@ -1646,4 +1653,3 @@ body.dark-mode .admin-delete-btn:hover {
   background: #d93025;
   color: white;
 }
-/* === AKHIR TAMBAHAN ADMIN === */
